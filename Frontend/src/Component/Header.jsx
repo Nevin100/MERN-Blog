@@ -1,22 +1,16 @@
 import React from "react";
 import "../App.css";
-import Login from "../pages/Login.jsx";
-import Register from "../pages/Register.jsx";
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div>
       <header>
-        <a href="#" className="Logo">
+        <Link to="/" className="Logo">
           Blogs
-        </a>
+        </Link>
         <nav>
-          <Link to="/login">
-            <Login />
-          </Link>
-          <Link to="/register">
-            <Register />
-          </Link>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
         </nav>
       </header>
     </div>
