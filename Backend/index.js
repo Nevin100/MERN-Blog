@@ -2,16 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const User = require("./models/Users.js");
 const app = express();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+//Model
+const User = require("./models/Users.js");
 
 //Bcrypt salt string:
 const salt = bcrypt.genSaltSync(10);
 const secret = "asdfgtheujnc890";
+
 //Middleware and parsing
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
+app.use(cookieParser());
 
 //Mongoose Connect:
 mongoose.connect(
@@ -19,7 +23,6 @@ mongoose.connect(
 );
 
 //Route:
-
 //register
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -49,6 +52,23 @@ app.post("/login", async (req, res) => {
   }
 });
 
+//profile:
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(401).json({ error: "Token not provided" });
+  }
+
+  jwt.verify(token, secret, {}, (error, info) => {
+    if (error) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    res.json(info);
+  });
+});
+
+//port listening
 app.listen(4000);
 
 //Test --> 12345
