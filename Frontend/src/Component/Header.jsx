@@ -1,7 +1,13 @@
 import React from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 const Header = () => {
+  useEffect(() => {
+    fetch("http://localhost:4000/profile", {
+      credentials: "include",
+    });
+  }, []);
   return (
     <div>
       <header>
