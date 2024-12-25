@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+
 //Model
 const User = require("./models/Users.js");
 
