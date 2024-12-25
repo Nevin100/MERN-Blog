@@ -46,7 +46,10 @@ app.post("/login", async (req, res) => {
   if (isPassOk) {
     jwt.sign({ username, id: UserDoc._id }, secret, {}, (error, token) => {
       if (error) throw error;
-      res.cookie("token", token).json("ok");
+      res.cookie("token", token).json({
+        id: UserDoc._id,
+        username,
+      });
     });
   } else {
     res.status(400).json("Wrong Token");
@@ -69,6 +72,9 @@ app.get("/profile", (req, res) => {
   });
 });
 
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json("Logout successfull");
+});
 //port listening
 app.listen(4000);
 
