@@ -7,7 +7,7 @@ const CreatePost = () => {
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
-  const createNewPost = (e) => {
+  const createNewPost = async (e) => {
     const data = new FormData();
     data.set("title", title);
     data.set("summary", summary);
@@ -15,7 +15,7 @@ const CreatePost = () => {
     data.set("file", files[0]);
     e.preventDefault();
     console.log(files);
-    fetch("http://localhost:4000/post", {
+    const response = await fetch("http://localhost:4000/post", {
       method: "POST",
       body: data,
     });

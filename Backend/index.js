@@ -7,6 +7,9 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const jwt = require("jsonwebtoken");
 
+//file systems (used in post api):
+const fs = require("fs");
+
 //multer upload:
 const uploadMiddleware = multer({ dest: "uploads/" });
 
@@ -82,7 +85,14 @@ app.post("/logout", (req, res) => {
 });
 
 //Post Creation
-app.post("/post", (req, res) => {});
+app.post("/post", uploadMiddleware.single("file"), (req, res) => {
+  const { originalname, path } = req.file;
+  const parts = originalname.split(".");
+  const ext = parts[parts.length - 1];
+  const newPath = path + "." + ext;
+  fs.renameSync(path, newPath);
+  res.json({ files: req.file });
+});
 
 //port listening
 app.listen(4000, () => {
