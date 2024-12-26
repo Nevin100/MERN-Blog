@@ -5,6 +5,10 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+
+//multer upload:
+const uploadMiddleware = multer({ dest: "uploads/" });
 
 //Model
 const User = require("./models/Users.js");
@@ -72,9 +76,13 @@ app.get("/profile", (req, res) => {
   });
 });
 
+//LogOut
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("Logout successfull");
 });
+
+//Post Creation
+app.post("/post", (req, res) => {});
 //port listening
 app.listen(4000, () => {
   console.log("Server is running on port 4000");
