@@ -15,6 +15,7 @@ const uploadMiddleware = multer({ dest: "uploads/" });
 
 //Model
 const User = require("./models/Users.js");
+const Post = require("./models/Posts.js");
 
 //Bcrypt salt string:
 const salt = bcrypt.genSaltSync(10);
@@ -85,13 +86,23 @@ app.post("/logout", (req, res) => {
 });
 
 //Post Creation
-app.post("/post", uploadMiddleware.single("file"), (req, res) => {
+app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
+  //file uploading to dest uploads and with the extension
   const { originalname, path } = req.file;
   const parts = originalname.split(".");
   const ext = parts[parts.length - 1];
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
-  res.json({ files: req.file });
+
+  const { title, summary, content } = req.body;
+  const PostDoc = await Post.create({
+    title,
+    summary,
+    content,
+    cover: newPath,
+  });
+
+  res.json(PostDoc);
 });
 
 //port listening
