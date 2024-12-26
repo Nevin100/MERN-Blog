@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const multer = require("multer");
 const bcrypt = require("bcryptjs");
 const app = express();
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const multer = require("multer");
 
 //multer upload:
 const uploadMiddleware = multer({ dest: "uploads/" });
