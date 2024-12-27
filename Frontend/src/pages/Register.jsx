@@ -1,54 +1,41 @@
 import React, { useState } from "react";
 import "../App.css";
 import "../index.css";
-import { Navigate } from "react-router-dom";
+
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
-
-  const register = async (e) => {
-    e.preventDefault();
+  async function register(ev) {
+    ev.preventDefault();
     const response = await fetch("http://localhost:4000/register", {
       method: "POST",
       body: JSON.stringify({ username, password }),
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
     });
-    if (response.status !== 200) {
-      alert("Registeration failed");
+    if (response.status === 200) {
+      alert("registration successful");
     } else {
-      alert("User Registeration is Successful");
+      alert("registration failed");
     }
-
-    if (response.ok) {
-      setRedirect(true);
-    } else {
-      alert("Wrong Credentials");
-    }
-  };
-
-  if (redirect) {
-    return <Navigate to="/login" />;
   }
+
   return (
-    <div>
-      <form className="register" onSubmit={register}>
-        <h2 className="login-title">Register</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="logbutton">Register</button>
-      </form>
-    </div>
+    <form className="register" onSubmit={register}>
+      <h1>Register</h1>
+      <input
+        type="text"
+        placeholder="username"
+        value={username}
+        onChange={(ev) => setUsername(ev.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="password"
+        value={password}
+        onChange={(ev) => setPassword(ev.target.value)}
+      />
+      <button>Register</button>
+    </form>
   );
 };
 
