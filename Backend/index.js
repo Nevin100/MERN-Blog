@@ -94,20 +94,26 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
 
-  const { title, summary, content } = req.body;
-  const PostDoc = await Post.create({
-    title,
-    summary,
-    content,
-    cover: newPath,
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, async (error, info) => {
+    if (error) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    const { title, summary, content } = req.body;
+    const PostDoc = await Post.create({
+      title,
+      summary,
+      content,
+      cover: newPath,
+      author: info.id,
+    });
+    res.json(PostDoc);
   });
-
-  res.json(PostDoc);
 });
 
 //geting of Post:
 app.get("/post", async (req, res) => {
-  res.json(await Post.find());
+  res.json(await Post.find().populate("author", ["username"]));
 });
 
 //port listening
