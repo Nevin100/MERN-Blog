@@ -107,8 +107,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
 
 //geting of Post:
 app.get("/post", async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
+  res.json(await Post.find());
 });
 
 //port listening

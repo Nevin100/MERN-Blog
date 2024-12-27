@@ -10,16 +10,17 @@ const CreatePost = () => {
   const [redirect, setRedirect] = useState(false);
 
   const createNewPost = async (e) => {
+    e.preventDefault();
     const data = new FormData();
     data.set("title", title);
     data.set("summary", summary);
     data.set("content", content);
     data.set("file", files[0]);
-    e.preventDefault();
-    console.log(files);
+    console.log("FormData content:", content);
     const response = await fetch("http://localhost:4000/post", {
       method: "POST",
       body: data,
+      credentials: "include",
     });
     if (response.ok) {
       setRedirect(true);
@@ -49,7 +50,7 @@ const CreatePost = () => {
       <ReactQuill
         className="react-quill-editor"
         value={content}
-        onChange={(newVal) => setContent(newVal)}
+        onChange={setContent}
       />
       <button className="post-blog-button">Post Blog</button>
     </form>

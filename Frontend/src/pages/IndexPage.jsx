@@ -1,23 +1,14 @@
-import React, { useEffect } from "react";
-import Post from "../Component/Post";
+import Post from "../Component/Post.jsx";
+import { useEffect, useState } from "react";
 
-//2:19:00 start
-const IndexPage = () => {
+export default function IndexPage() {
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
-    const response = fetch("http://localhost:4000/post").then((response) => {
+    fetch("http://localhost:4000/post").then((response) => {
       response.json().then((posts) => {
-        console.log(posts);
+        setPosts(posts);
       });
     });
-  });
-
-  return (
-    <>
-      <Post />
-      <Post />
-      <Post />
-    </>
-  );
-};
-
-export default IndexPage;
+  }, []);
+  return <>{posts.length > 0 && posts.map((post) => <Post {...post} />)}</>;
+}
