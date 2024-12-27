@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
+import Editor from "../Component/Editor.jsx";
 import "react-quill/dist/quill.snow.css";
 import { Navigate } from "react-router-dom";
 const CreatePost = () => {
@@ -47,10 +47,10 @@ const CreatePost = () => {
         onChange={(e) => setSummary(e.target.value)}
       />
       <input type="file" onChange={(e) => setFiles(e.target.files)} />
-      <ReactQuill
+      <Editor
         className="react-quill-editor"
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={setContent}
       />
       <button className="post-blog-button">Post Blog</button>
     </form>

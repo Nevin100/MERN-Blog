@@ -24,6 +24,7 @@ const PostPage = () => {
         />
       </div>
       <h1 className="post-page-title">{postInfo.title}</h1>
+      <h3 className="post-page-summary">{postInfo.summary}</h3>
       <div dangerouslySetInnerHTML={{ __html: postInfo.content }} />
     </div>
   );
