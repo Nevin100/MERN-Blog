@@ -87,7 +87,6 @@ app.post("/logout", (req, res) => {
 
 //Post Creation
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
-  //file uploading to dest uploads and with the extension
   const { originalname, path } = req.file;
   const parts = originalname.split(".");
   const ext = parts[parts.length - 1];
@@ -95,19 +94,17 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   fs.renameSync(path, newPath);
 
   const { token } = req.cookies;
-  jwt.verify(token, secret, {}, async (error, info) => {
-    if (error) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
+  jwt.verify(token, secret, {}, async (err, info) => {
+    if (err) throw err;
     const { title, summary, content } = req.body;
-    const PostDoc = await Post.create({
+    const postDoc = await Post.create({
       title,
       summary,
       content,
       cover: newPath,
       author: info.id,
     });
-    res.json(PostDoc);
+    res.json(postDoc);
   });
 });
 

@@ -1,13 +1,13 @@
 //Schema for the Post model
 
 const mongoose = require("mongoose");
-const { Schema, model } = require("mongoose");
+const { Schema, model } = mongoose;
 
 const PostSchema = new Schema(
   {
     title: { type: String },
     summary: { type: String },
-    constent: { type: String },
+    content: { type: String },
     cover: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "User" },
   },
