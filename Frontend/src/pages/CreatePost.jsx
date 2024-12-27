@@ -50,7 +50,7 @@ const CreatePost = () => {
       <ReactQuill
         className="react-quill-editor"
         value={content}
-        onChange={setContent}
+        onChange={(e) => setContent(e.target.value)}
       />
       <button className="post-blog-button">Post Blog</button>
     </form>

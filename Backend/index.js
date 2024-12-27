@@ -26,6 +26,9 @@ app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(cookieParser());
 
+//handling upload files :
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
 //Mongoose Connect:
 mongoose.connect(
   "mongodb+srv://Test:Test12345@mern.bvkxh.mongodb.net/?retryWrites=true&w=majority&appName=MERN"
@@ -113,8 +116,16 @@ app.get("/post", async (req, res) => {
   res.json(
     await Post.find()
       .populate("author", ["username"])
-      .sort({ createdAt: -1 }.limit(20)) //using for the latest post to come on top
-  );
+      .sort({ createdAt: -1 })
+      .limit(20)
+  ); //using for the latest post to come on top
+});
+
+//single post getting
+app.get("/post/:id", async (req, res) => {
+  const { id } = req.params;
+  const postDoc = await Post.findById(id).populate("author", ["username"]);
+  res.json(postDoc);
 });
 
 //port listening

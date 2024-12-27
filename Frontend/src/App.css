@@ -45,6 +45,10 @@ header nav{
   gap: 7px;
   margin-bottom: 78px;
 }
+.post a{
+  text-decoration: none;
+  color:inherit
+}
 
 img{
   height: 350px;

@@ -8,7 +8,7 @@ import Register from "./pages/Register.jsx";
 import { UserContextProvider } from "./UserContext.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import IndexPage from "./pages/IndexPage.jsx";
-
+import PostPage from "./pages/PostPage.jsx";
 const App = () => {
   return (
     <UserContextProvider>
@@ -18,6 +18,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<CreatePost />} />
+          <Route path="/post/:id" element={<PostPage />} />
         </Route>
       </Routes>
     </UserContextProvider>
